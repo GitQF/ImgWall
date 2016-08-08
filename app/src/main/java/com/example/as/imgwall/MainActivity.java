@@ -100,25 +100,25 @@ public class MainActivity extends AppCompatActivity {
                         System.gc();
                         count = 0;
                     }
-                    //lines[i].removeView(view);
+                    lines[i].removeView(view);
                     //if (bitmap != null && !bitmap.isRecycled()) {
                         //bitmap.recycle();
                     //}
                 } else {
                     if (((BitmapDrawable) view.getDrawable()).getBitmap() == null) {
                         try {
-                            //Bitmap bm = loader.getImg((String) view.getTag());
-                            //if (bm == null) {
+                            Bitmap bm = loader.getImg((String) view.getTag());
+                            if (bm == null) {
                                 new LoadImgTask(view).execute((String) view.getTag());
-                            //} else {
-                                //try {
-                                    //view.setImageBitmap(bm);
-                                //}catch (Exception e){
+                            } else {
+                                try {
+                                    view.setImageBitmap(bm);
+                                }catch (Exception e){
 
-                                //}
+                                }
                             /*Log.d("ggggggggggggggg","fffffffffffff"+bm.getByteCount());
                             Log.d("ggggggggggggggg","fffffffffffff"+bm.isRecycled());*/
-                            //}
+                            }
                         } catch (OutOfMemoryError e) {
                             view.setImageBitmap(null);
                             return;
@@ -154,7 +154,9 @@ public class MainActivity extends AppCompatActivity {
     private void add() {
         int l = getMinHeight();
         for (int i = 0; i < 3; i++) {
+            int c = 0;
             while (h[(l + i) % 3] + 20 < scroll.getScrollY() + hei) {
+                if(c++ > 3)break;
                 if (currentImg < Img.girls.size()) {
                     new LoadImgTask(lines[(l + i) % 3]).execute(Img.girls.get(currentImg++));
                     h[(l + i) % 3] += 500;

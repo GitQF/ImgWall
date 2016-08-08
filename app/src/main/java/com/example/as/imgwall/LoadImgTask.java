@@ -88,7 +88,7 @@ public class LoadImgTask extends AsyncTask<String,Void,Bitmap> {
         }
         finally {
             if(img != null) {
-                //loader.putImg(url,img);
+                loader.putImg(url,img);
                 return img;
             }
             return null;
